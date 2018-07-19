@@ -1,20 +1,33 @@
-.container {
-    display: flex;
-    flex-direction: column;
-    font-family: 'Roboto Slab', serif;
-    margin: 0;
-}
+/*Global Styles*/
 
 body {
     box-sizing: border-box;
     margin: 0;
+    font-family: 'Open Sans', sans-serif;
 }
+
+.container {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto Slab', serif;
+}
+
+input {
+    align-items: center;
+    display: flex;
+    font-size: 100%;
+    justify-content: space-between;
+    margin: auto;
+    height: 30px;
+    width: 45%;
+}
+
+/*Form Styles*/
 
 .form-container {
     background-color: #e5f3f2;
-    box-sizing: border-box;
     height: 300px;
-    margin: 0;
+    align-items: center;
     text-align: center;
 }
 
@@ -24,31 +37,8 @@ h1{
     font-size: 275%;
     margin-bottom:  30px;
 }
-
 .alt-title-color {
     color: #6d6e71;
-}
-
-#title-input {
-    align-items: center;
-    display: flex;
-    height: 30px;
-    justify-content: space-between;
-    width: 45%;
-}
-
-#body-input {
-    align-items: center;
-    display: flex;
-    height: 30px;
-    justify-content: space-between;
-    width: 45%;
-}
-
-#search-field {
-    height: 30px;
-    margin-top: 50px;
-    width: 45%;
 }
 
 .save-btn {
@@ -59,19 +49,17 @@ h1{
     height: 30px;
     width: 45.5%;
 }
-
 .save-btn:hover {
     background-color: #045e55;
 }
 
-input {
-    align-items: center;
-    display: flex;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 100%;
-    justify-content: space-between;
-    margin: auto;
+/*Search Styles*/
+
+#search-field {
+    margin-top: 50px;
 }
+
+/*Bottom Box Styles (change name)*/
 
 .card-container {
     margin: auto;
@@ -79,14 +67,14 @@ input {
     width: 45%;
 }
 
-.card {
+/*.card {
     background-color: #ffffff;
     height: auto;
     margin: auto;
     width: 45%;
-}
+}*/
 
-.title-of-card{
+.title-of-card {
     color: #6D6E71;
     display: inline-block;
     font-family: 'Roboto Slab', serif;
@@ -100,12 +88,12 @@ h2 {
    font-size: 150%;
 }
 
-p {
+/*p {
     color: #939598;
     font-family: 'Open Sans', sans-serif;
-}
+}*/
 
-.body-of-card{
+.body-of-card {
     color: #939598;
     font-family: 'Open Sans', sans-serif;
     font-size: 100%;
@@ -116,52 +104,40 @@ button {
     border: none;
 }
 
+.upvote, 
+.downvote,
+.delete-button {
+    width: 20px;
+    height: 20px;
+}
+
 .upvote {
     background-image: url(./images/upvote.svg);
-    background-size: cover;
-    height: 20px;
     margin-right: 5px; 
-    width: 20px;
 }
 
 .upvote:hover {
-    background-color: transparent;
     background-image: url(./images/upvote-hover.svg);
-    background-size: cover;
-    height: 20px;
-    width: 20px;
 }
 
 .downvote {
     background-image: url(./images/downvote.svg);
-    background-size: cover;
-    height: 20px;
     margin-right: 5px; 
-    width: 20px;
 }
 
 .downvote:hover {
     background-image: url(./images/downvote-hover.svg);
-    background-size: cover;
-    height: 20px;
-    width: 20px;
 }
 
 .delete-button {
     background-image: url(./images/delete.svg);
-    background-size: cover;
-    height: 20px;
     position: absolute;
     right: 10px;
     top: 15px;
-    width: 20px;
 }
 
 .delete-button:hover {
     background-image: url(./images/delete-hover.svg);
-    background-size: cover;
-    height: 20px;
-    width: 20px;
 }
 
 @media(max-width: 640px){
@@ -170,7 +146,7 @@ button {
         width: 85%;
     }
 
-    #search-input {
+    #search-field {
         border: solid #999 1px;
     }
 }
