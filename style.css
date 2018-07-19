@@ -2,9 +2,6 @@
     display: flex;
     flex-direction: column;
     font-family: 'Roboto Slab', serif;
-}
-
-.container-box {
     margin: 0;
 }
 
@@ -13,7 +10,7 @@ body {
     margin: 0;
 }
 
-.top-box {
+.form-container {
     background-color: #e5f3f2;
     box-sizing: border-box;
     height: 300px;
@@ -22,14 +19,14 @@ body {
 }
 
 h1{
-    color: #6d6e71;
+    color: #00a79d;
     display: inline-block;
     font-size: 275%;
     margin-bottom:  30px;
 }
 
-.idea {
-    color: #00a79d;
+.alt-title-color {
+    color: #6d6e71;
 }
 
 #title-input {
@@ -48,7 +45,7 @@ h1{
     width: 45%;
 }
 
-#search-input {
+#search-field {
     height: 30px;
     margin-top: 50px;
     width: 45%;
