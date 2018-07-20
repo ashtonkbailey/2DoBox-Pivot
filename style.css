@@ -32,9 +32,9 @@ h1{
 }
 
 .form-container {
+    align-items: center;
     background-color: #e5f3f2;
     height: 300px;
-    align-items: center;
     text-align: center;
 }
 
