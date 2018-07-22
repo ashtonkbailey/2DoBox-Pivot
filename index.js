@@ -1,21 +1,4 @@
 
-// Area we need to rework
-
-// var newCard = function(id , title , body , quality) {
-//     return '<div id="' + id + '"class="card-container"><h2 class="title-of-card">'  
-//             + title +  '</h2>'
-//             + '<button class="delete-button"></button>'
-//             +'<p class="body-of-card">'
-//             + body + '</p>'
-//             + '<button class="upvote"></button>' 
-//             + '<button class="downvote"></button>' 
-//             + '<p class="quality">' + 'quality:' + '<span class="qualityVariable">' + 'swill' + '</span>' + '</p>'
-//             + '<hr>' 
-//             + '</div>';
-// };
-
-
-
 // ***** Event Listeners *******
 
 $('.save-btn').on('click', saveBtnClick);
@@ -40,6 +23,10 @@ $(".bottom-box").on('click', function(event){
     }
 });
 
+
+// *******   Global Variable  ******
+var cardsArray = [];
+
 // ******* Constructor Functions **********
 
 function Card(id, title, body, quality) {
@@ -51,35 +38,45 @@ function Card(id, title, body, quality) {
 
 // *****   Functions   *******
 
-$.each(localStorage, function() {
-    var cardData = JSON.parse();
-    $( ".bottom-box" ).prepend(newCard(cardData.id, cardData.title, cardData.body, cardData.quality));
-});
-
-var localStoreCard = function() {
-    var indexValue = cardObject().id;
-    var cardString = JSON.stringify(cardObject());
-    localStorage.setItem(indexValue, cardString);
-}
-
-function disableSaveBtn() {
-   if ($('#title-input').val() === "" && $('#body-input').val() === "") {
-       return false;
-    }; 
-}
-
-function displayCard() {
-    $( ".bottom-box" ).prepend(newCard($('#title-input').val(), $('#body-input').val()); 
-    // $( ".bottom-box" ).prepend(newCard(newCard.id, $('#title-input').val(), $('#body-input').val(), newCard.quality));
-}
-    
 function saveBtnClick(event) {
     event.preventDefault();
     disableSaveBtn(event);
-    localStoreCard();
-    displayCard();
+    var newCard = new Card(Date.now(), $('#title-input').val(), $('#body-input').val());
+    cardsArray.push(newCard);
+    localStorage.setItem('cardsArray', JSON.stringify(cardsArray));
+    displayCard(newCard);
     $('form')[0].reset();
 };
+
+function disableSaveBtn() {
+    console.log('savefunction');
+//    if ($('#title-input').val() === "" && $('#body-input').val() === "") {
+//        return false;
+//     }; 
+}
+
+function displayCard(card) {
+    var newDiv = document.createElement('div');
+    newDiv.innerHTML = `<div id="${card.id}" class="card-container">
+                            <h2 class="title-of-card">${card.title}</h2>
+                            <button class="delete-button"></button>
+                            <p class="body-of-card">${card.body}</p>
+                            <button class="upvote"></button>
+                            <button class="downvote"></button>
+                            <p class="quality">Quality: 
+                            <span class="qualityVariable">${card.quality}</span></p>
+                            <hr>
+                        </div>`
+    $( ".bottom-box" ).prepend(newDiv);
+}
+
+// $.each(localStorage, function() {
+//     var cardData = JSON.parse();
+//     $( ".bottom-box" ).prepend(newCard(cardData.id, cardData.title, cardData.body, cardData.quality));
+// });
+
+
+
 
 function raiseQuality() {
     var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
