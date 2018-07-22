@@ -1,11 +1,24 @@
 // Constructor function
 
-function Card(id, title, body) {
-    this.id = Date.now();
-    this.title = $('#title-input').val();
-    this.body = $('#body-input').val();
-    this.quality = "swill";
-}
+// function Card(id, title, body) {
+//     this.id = Date.now();
+//     this.title = $('#title-input').val();
+//     this.body = $('#body-input').val();
+//     this.quality = quality || 'swill';
+//     this.cardsArray = [];
+// }
+
+// Card.prototype.store = function() {
+//     this.cardsArray.push(newCard());
+//     localStorage.setItem('cardsArray', JSON.stringify(cardsArray));
+//     console.log('works');
+// }
+
+// function newCard() {
+
+// }
+
+// var newCard = new Card(Date.now(), $('#title-input').val(), $('#body-input').val(), quality);
 
 var newCard = function(id , title , body , quality) {
     return '<div id="' + id + '"class="card-container"><h2 class="title-of-card">'  
@@ -22,22 +35,24 @@ var newCard = function(id , title , body , quality) {
 
 function cardObject() {
     return {
-        id: newCard.id,
+        id: Date.now(),
         title: $('#title-input').val(),
         body: $('#body-input').val(),
-        quality: newCard.quality
+        quality: 'swill',
     };
 }
 
-$.each(localStorage, function(key) {
+$.each(localStorage, function() {
     var cardData = JSON.parse(this);
-    // numCards++;
+    
     $( ".bottom-box" ).prepend(newCard(cardData.id, cardData.title, cardData.body, cardData.quality));
 });
 
 var localStoreCard = function() {
+    var indexValue = cardObject().id;
     var cardString = JSON.stringify(cardObject());
-    localStorage.setItem(newCard.id, cardString);
+    
+    localStorage.setItem(indexValue, cardString);
 }
 
 $('.save-btn').on('click', function(event) {
@@ -56,13 +71,13 @@ $(".bottom-box").on('click', function(event){
     var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
     var qualityVariable;
 
-    var qualities = ['good', 'bad', 'ugly'];
-    var upvote = $(event.target.className === "upvote");
-    var downvote = $(event.target.className === "downvote");
+    // var qualities = ['good', 'bad', 'ugly'];
+    // var upvote = $(event.target.className === "upvote");
+    // var downvote = $(event.target.className === "downvote");
     
 
 // function qualityChange() {
-//       where we update html/storage
+      // where we update html/storage
 
 // function upvote() {
 // var qualityIndex = qualities.indexOf(quality);
