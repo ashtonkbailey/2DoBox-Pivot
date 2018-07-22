@@ -51,18 +51,23 @@ $.each(localStorage, function() {
 var localStoreCard = function() {
     var indexValue = cardObject().id;
     var cardString = JSON.stringify(cardObject());
-    
     localStorage.setItem(indexValue, cardString);
+}
+
+function disableSaveBtn() {
+   if ($('#title-input').val() === "" || $('#body-input').val() === "") {
+       return false;
+    }; 
+}
+
+function displayCard() {
+    $( ".bottom-box" ).prepend(newCard(newCard.id, $('#title-input').val(), $('#body-input').val(), newCard.quality)); 
 }
 
 $('.save-btn').on('click', function(event) {
     event.preventDefault();
-    if ($('#title-input').val() === "" || $('#body-input').val() === "") {
-       return false;
-    };  
-
-    // numCards++;
-    $( ".bottom-box" ).prepend(newCard(newCard.id, $('#title-input').val(), $('#body-input').val(), newCard.quality)); 
+    disableSaveBtn();
+    displayCard();
     localStoreCard();
     $('form')[0].reset();
 });
