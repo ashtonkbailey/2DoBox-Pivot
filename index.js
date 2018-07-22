@@ -14,14 +14,7 @@
 //             + '</div>';
 // };
 
-// function cardObject() {
-//     return {
-//         id: Date.now(),
-//         title: $('#title-input').val(),
-//         body: $('#body-input').val(),
-//         quality: 'swill',
-//     };
-// }
+
 
 // ***** Event Listeners *******
 
@@ -47,10 +40,14 @@ $(".bottom-box").on('click', function(event){
     }
 });
 
-
 // ******* Constructor Functions **********
 
-
+function Card(id, title, body, quality) {
+        this.id = id;
+        this.title = title;
+        this.body = body;
+        this.quality = quality || 'swill'
+    }
 
 // *****   Functions   *******
 
