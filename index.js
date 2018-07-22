@@ -1,30 +1,61 @@
-// Constructor 
 
-var newCard = function(id , title , body , quality) {
-    return '<div id="' + id + '"class="card-container"><h2 class="title-of-card">'  
-            + title +  '</h2>'
-            + '<button class="delete-button"></button>'
-            +'<p class="body-of-card">'
-            + body + '</p>'
-            + '<button class="upvote"></button>' 
-            + '<button class="downvote"></button>' 
-            + '<p class="quality">' + 'quality:' + '<span class="qualityVariable">' + 'swill' + '</span>' + '</p>'
-            + '<hr>' 
-            + '</div>';
-};
+// Area we need to rework
 
-function cardObject() {
-    return {
-        id: Date.now(),
-        title: $('#title-input').val(),
-        body: $('#body-input').val(),
-        quality: 'swill',
-    };
-}
+// var newCard = function(id , title , body , quality) {
+//     return '<div id="' + id + '"class="card-container"><h2 class="title-of-card">'  
+//             + title +  '</h2>'
+//             + '<button class="delete-button"></button>'
+//             +'<p class="body-of-card">'
+//             + body + '</p>'
+//             + '<button class="upvote"></button>' 
+//             + '<button class="downvote"></button>' 
+//             + '<p class="quality">' + 'quality:' + '<span class="qualityVariable">' + 'swill' + '</span>' + '</p>'
+//             + '<hr>' 
+//             + '</div>';
+// };
+
+// function cardObject() {
+//     return {
+//         id: Date.now(),
+//         title: $('#title-input').val(),
+//         body: $('#body-input').val(),
+//         quality: 'swill',
+//     };
+// }
+
+// ***** Event Listeners *******
+
+$('.save-btn').on('click', saveBtnClick);
+
+$(".bottom-box").on('click', function(event){
+    // var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
+    var qualityVariable;
+    parseTheCard();
+    // if (event.target.className === "upvote" ) {
+    //     raiseQuality();
+    // } else if (event.target.className === "downvote") {
+    //     lowerQuality();
+    // };
+    parsedCard.quality = qualityVariable;
+    var newCardJSON = JSON.stringify(parsedCard);
+    localStorage.setItem(cardHTMLId, newCardJSON);
+
+    if (event.target.className === "delete-button") {
+        var cardHTML = $(event.target).closest('.card-container').remove();
+        var cardHTMLId = cardHTML[0].id;
+        localStorage.removeItem(cardHTMLId);
+    }
+});
+
+
+// ******* Constructor Functions **********
+
+
+
+// *****   Functions   *******
 
 $.each(localStorage, function() {
     var cardData = JSON.parse();
-    
     $( ".bottom-box" ).prepend(newCard(cardData.id, cardData.title, cardData.body, cardData.quality));
 });
 
@@ -44,10 +75,7 @@ function displayCard() {
     $( ".bottom-box" ).prepend(newCard($('#title-input').val(), $('#body-input').val()); 
     // $( ".bottom-box" ).prepend(newCard(newCard.id, $('#title-input').val(), $('#body-input').val(), newCard.quality));
 }
-
-$('.save-btn').on('click', saveBtnClick);
     
-
 function saveBtnClick(event) {
     event.preventDefault();
     disableSaveBtn(event);
@@ -75,29 +103,6 @@ function lowerQuality() {
         qualityVariable = 'swill';
     };
 }
-
-$(".bottom-box").on('click', function(event){
-    // var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
-    var qualityVariable;
-    parseTheCard();
-    // if (event.target.className === "upvote" ) {
-    //     raiseQuality();
-    // } else if (event.target.className === "downvote") {
-    //     lowerQuality();
-    // };
-
-    parsedCard.quality = qualityVariable;
-
-    var newCardJSON = JSON.stringify(parsedCard);
-    localStorage.setItem(cardHTMLId, newCardJSON);
-
-   
-    if (event.target.className === "delete-button") {
-        var cardHTML = $(event.target).closest('.card-container').remove();
-        var cardHTMLId = cardHTML[0].id;
-        localStorage.removeItem(cardHTMLId);
-    }
-});
 
 function parseTheCard() {
         var cardHTML = $(event.target).closest('.card-container');
