@@ -1,20 +1,22 @@
 
 // ***** Event Listeners *******
 
+$(document).ready(regenerateCards);
+
 $('.save-btn').on('click', saveBtnClick);
 
 $(".bottom-box").on('click', function(event){
     // var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
-    var qualityVariable;
-    parseTheCard();
+    // var qualityVariable;
+    // parseTheCard();
     // if (event.target.className === "upvote" ) {
     //     raiseQuality();
     // } else if (event.target.className === "downvote") {
     //     lowerQuality();
     // };
-    parsedCard.quality = qualityVariable;
-    var newCardJSON = JSON.stringify(parsedCard);
-    localStorage.setItem(cardHTMLId, newCardJSON);
+    // parsedCard.quality = qualityVariable;
+    // var newCardJSON = JSON.stringify(parsedCard);
+    // localStorage.setItem(cardHTMLId, newCardJSON);
 
     if (event.target.className === "delete-button") {
         var cardHTML = $(event.target).closest('.card-container').remove();
@@ -25,7 +27,7 @@ $(".bottom-box").on('click', function(event){
 
 
 // *******   Global Variable  ******
-var cardsArray = [];
+var cardsArray = JSON.parse(localStorage.getItem('cardsArray')) || [];
 
 // ******* Constructor Functions **********
 
@@ -70,6 +72,15 @@ function displayCard(card) {
     $( ".bottom-box" ).prepend(newDiv);
 }
 
+function regenerateCards() {
+    console.log('sdfgouhas');
+    JSON.parse(localStorage.getItem('cardsArray'));
+    console.log(cardsArray);
+    cardsArray.forEach(function(element) {
+    displayCard(element);
+    });
+}
+
 // $.each(localStorage, function() {
 //     var cardData = JSON.parse();
 //     $( ".bottom-box" ).prepend(newCard(cardData.id, cardData.title, cardData.body, cardData.quality));
@@ -98,13 +109,13 @@ function lowerQuality() {
     };
 }
 
-function parseTheCard() {
-        var cardHTML = $(event.target).closest('.card-container');
-        var cardHTMLId = cardHTML[0].id;
-        var cardObjectInJSON = localStorage.getItem(cardHTMLId);
-        var parsedCard = JSON.parse(cardObjectInJSON);  
-        console.log('works');
-    };
+// function parseTheCard() {
+//         var cardHTML = $(event.target).closest('.card-container');
+//         var cardHTMLId = cardHTML[0].id;
+//         var cardObjectInJSON = localStorage.getItem(cardHTMLId);
+//         var parsedCard = JSON.parse(cardObjectInJSON);  
+//         console.log('works');
+//     };
       
 
 
