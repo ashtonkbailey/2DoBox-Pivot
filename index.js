@@ -17,14 +17,26 @@ $(".bottom-box").on('click', function(event){
     // parsedCard.quality = qualityVariable;
     // var newCardJSON = JSON.stringify(parsedCard);
     // localStorage.setItem(cardHTMLId, newCardJSON);
+    deleteCard();
+    })
 
+function deleteCard() {
     if (event.target.className === "delete-button") {
         var cardHTML = $(event.target).closest('.card-container').remove();
-        var cardHTMLId = cardHTML[0].id;
-        localStorage.removeItem(cardHTMLId);
+        var foundIndex = cardsArray.findIndex(bob);
+        console.log(foundIndex);
+        cardsArray.splice(foundIndex, 1);
+        console.log(cardsArray);
+        localStorage.setItem('cardsArray', JSON.stringify(cardsArray));
     }
-});
-
+}
+function bob(element) {
+    var cardHTMLId = event.target.parentNode.dataset.id;
+    console.log(cardHTMLId);
+    console.log(element);
+    return element.id == cardHTMLId;
+} 
+// <<<<<< findIndex method doesn't find correct index
 
 // *******   Global Variable  ******
 var cardsArray = JSON.parse(localStorage.getItem('cardsArray')) || [];
@@ -42,7 +54,7 @@ function Card(id, title, body, quality) {
 
 function saveBtnClick(event) {
     event.preventDefault();
-    disableSaveBtn(event);
+    // disableSaveBtn();
     var newCard = new Card(Date.now(), $('#title-input').val(), $('#body-input').val());
     cardsArray.push(newCard);
     localStorage.setItem('cardsArray', JSON.stringify(cardsArray));
@@ -50,16 +62,18 @@ function saveBtnClick(event) {
     $('form')[0].reset();
 };
 
-function disableSaveBtn() {
-    console.log('savefunction');
-//    if ($('#title-input').val() === "" && $('#body-input').val() === "") {
-//        return false;
+// function disableSaveBtn() {
+//     console.log('savefunction');
+//    if ($('#title-input').val() !== "" && $('#body-input').val() !== "") {
+//         $('.save-btn').disabled = false;
+//     } else {
+//         $('.save-btn').prop('disabled', true);
 //     }; 
-}
+// }
 
 function displayCard(card) {
     var newDiv = document.createElement('div');
-    newDiv.innerHTML = `<div id="${card.id}" class="card-container">
+    newDiv.innerHTML = `<div data-id="${card.id}" class="card-container">
                             <h2 class="title-of-card">${card.title}</h2>
                             <button class="delete-button"></button>
                             <p class="body-of-card">${card.body}</p>
