@@ -8,35 +8,21 @@ $('.save-btn').on('click', saveBtnClick);
 $(".bottom-box").on('click', function(event){
     // var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
     // var qualityVariable;
-    // parseTheCard();
     // if (event.target.className === "upvote" ) {
     //     raiseQuality();
+    //     console.log('up');
     // } else if (event.target.className === "downvote") {
     //     lowerQuality();
+    //     console.log('down');
     // };
     // parsedCard.quality = qualityVariable;
     // var newCardJSON = JSON.stringify(parsedCard);
     // localStorage.setItem(cardHTMLId, newCardJSON);
+    changeQuality();
     deleteCard();
     })
 
-function deleteCard() {
-    if (event.target.className === "delete-button") {
-        var cardHTML = $(event.target).closest('.card-container').remove();
-        var foundIndex = cardsArray.findIndex(bob);
-        console.log(foundIndex);
-        cardsArray.splice(foundIndex, 1);
-        console.log(cardsArray);
-        localStorage.setItem('cardsArray', JSON.stringify(cardsArray));
-    }
-}
-function bob(element) {
-    var cardHTMLId = event.target.parentNode.dataset.id;
-    console.log(cardHTMLId);
-    console.log(element);
-    return element.id == cardHTMLId;
-} 
-// <<<<<< findIndex method doesn't find correct index
+
 
 // *******   Global Variable  ******
 var cardsArray = JSON.parse(localStorage.getItem('cardsArray')) || [];
@@ -87,9 +73,7 @@ function displayCard(card) {
 }
 
 function regenerateCards() {
-    console.log('sdfgouhas');
     JSON.parse(localStorage.getItem('cardsArray'));
-    console.log(cardsArray);
     cardsArray.forEach(function(element) {
     displayCard(element);
     });
@@ -100,38 +84,48 @@ function regenerateCards() {
 //     $( ".bottom-box" ).prepend(newCard(cardData.id, cardData.title, cardData.body, cardData.quality));
 // });
 
-
-
-
-function raiseQuality() {
-    var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
-    var qualityVariable;
-    if (currentQuality === 'swill') {
-        qualityVariable = 'plausible';
-    } else if (currentQuality === 'plausible') {
-        qualityVariable = 'genius';
-    };
+function deleteCard() {
+    if (event.target.className === "delete-button") {
+        var cardHTML = $(event.target).closest('.card-container').remove();
+        var foundIndex = cardsArray.findIndex(selectCardIndex);
+        cardsArray.splice(foundIndex, 1);
+        localStorage.setItem('cardsArray', JSON.stringify(cardsArray));
+    }
 }
 
-function lowerQuality() {
+function selectCardIndex(element) {
+    var cardHTMLId = event.target.parentNode.dataset.id;
+    return element.id == cardHTMLId;
+} 
+
+// qualityArray = 
+// up vote will move one index up in the array and return the value of that index.
+// down vote will move one index down in the array and reassign the value of that index & display on card.
+// we created a variable for our array, then 
+// targeted the quality as it is currently on the page
+// then we identified part of page where up and down votes live
+// then we created a variable that targets the index number of the current quality in the array
+// then we assigned the qualityIndex to increment up by one if the upvote was pushed
+// next we will need to change the inner text of quality to represent new value
+// then we will need to update the storage / change the info in the array
+// we want to stop functionality of going up so we don't go out of the array
+// then do all the same stuff for the down button.
+
+
+function changeQuality() {
+    var qualities = ['swill', 'plausible', 'genius'];
     var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
-    var qualityVariable;
-    if (currentQuality === 'genius') {
-        qualityVariable = 'plausible';
-    } else if (currentQuality === 'plausible') {
-        qualityVariable = 'swill';
+    var qualityIndex = qualities.indexOf(currentQuality)
+    console.log(qualities.indexOf(currentQuality));
+    if (event.target.className === "upvote") {
+        qualityIndex++;
+        console.log(qualityIndex);
+    console.log('upvote')
+    } else if (event.target.className === "downvote") {
+    console.log('downvote');
     };
-}
 
-// function parseTheCard() {
-//         var cardHTML = $(event.target).closest('.card-container');
-//         var cardHTMLId = cardHTML[0].id;
-//         var cardObjectInJSON = localStorage.getItem(cardHTMLId);
-//         var parsedCard = JSON.parse(cardObjectInJSON);  
-//         console.log('works');
-//     };
-      
-
+}  
 
 
 
