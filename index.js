@@ -23,10 +23,6 @@ $(".bottom-box").on('click', function(event){
     })
 
 
-
-// *******   Global Variable  ******
-var cardsArray = JSON.parse(localStorage.getItem('cardsArray')) || [];
-
 // ******* Constructor Functions **********
 
 function Card(id, title, body, quality) {
@@ -38,10 +34,16 @@ function Card(id, title, body, quality) {
 
 // *****   Functions   *******
 
+function getCards() {
+    var cardsArray = JSON.parse(localStorage.getItem('cardsArray')) || [];
+    return cardsArray;
+}
+
 function saveBtnClick(event) {
     event.preventDefault();
     // disableSaveBtn();
     var newCard = new Card(Date.now(), $('#title-input').val(), $('#body-input').val());
+    var cardsArray = getCards();
     cardsArray.push(newCard);
     localStorage.setItem('cardsArray', JSON.stringify(cardsArray));
     displayCard(newCard);
@@ -73,7 +75,7 @@ function displayCard(card) {
 }
 
 function regenerateCards() {
-    JSON.parse(localStorage.getItem('cardsArray'));
+    var cardsArray = getCards();
     cardsArray.forEach(function(element) {
     displayCard(element);
     });
@@ -87,6 +89,7 @@ function regenerateCards() {
 function deleteCard() {
     if (event.target.className === "delete-button") {
         var cardHTML = $(event.target).closest('.card-container').remove();
+        var cardsArray = getCards();
         var foundIndex = cardsArray.findIndex(selectCardIndex);
         cardsArray.splice(foundIndex, 1);
         localStorage.setItem('cardsArray', JSON.stringify(cardsArray));
@@ -106,7 +109,8 @@ function selectCardIndex(element) {
 // then we identified part of page where up and down votes live
 // then we created a variable that targets the index number of the current quality in the array
 // then we assigned the qualityIndex to increment up by one if the upvote was pushed
-// next we will need to change the inner text of quality to represent new value
+// 
+ //next we will need to change the inner text of quality to represent new value
 // then we will need to update the storage / change the info in the array
 // we want to stop functionality of going up so we don't go out of the array
 // then do all the same stuff for the down button.
