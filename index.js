@@ -110,6 +110,21 @@ function raiseQuality() {
     };
 }
 
+function lowerQuality() {
+    var qualities = ['swill', 'plausible', 'genius'];
+    var cardsArray = getCards();
+    var foundIndex = cardsArray.findIndex(selectCardIndex);
+    var currentStoredQuality = cardsArray[foundIndex].quality;
+    var i = qualities.indexOf(currentStoredQuality);
+    if (i >= 1) {
+        i--;
+        cardsArray[foundIndex].quality = qualities[i];
+        localStorage.setItem('cardsArray', JSON.stringify(cardsArray));
+         $('.card-container').remove();
+         regenerateCards();
+    };
+}
+
 
 
 
