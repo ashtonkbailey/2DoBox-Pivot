@@ -9,7 +9,9 @@ $(".bottom-box").on('click', checkTargetOnPage)
 
 $(document).keypress(updateCardEdits);
 
-$('input').on('keyup', enableSaveBtn)
+$('form').on('keyup', enableSaveBtn)
+
+$('#search-field').on('keydown', filterCards)
 
 // ******* Constructor Functions **********
 
@@ -21,6 +23,13 @@ function Card(id, title, body, quality) {
 }
 
 // *****   Functions   *******
+
+function filterCards() {
+    var titleOnCard = $('.title-of-card').text();
+    var bodyOnCard = $('.body-of-card').text();
+
+
+}
 
 function enableSaveBtn() {
    if ($('#title-input').val() !== "" && $('#body-input').val() !== "") {
@@ -75,6 +84,7 @@ function displayCard(card) {
                             <button class="downvote"></button>
                             <p class="quality">Quality: 
                             <span class="qualityVariable">${card.quality}</span></p>
+                            <button class="completed-btn">completed<button>
                             <hr>
                         </div>`
     $( ".bottom-box" ).prepend(newDiv);

@@ -129,6 +129,20 @@ h2 {
     background-image: url(./images/delete-hover.svg);
 }
 
+.completed-btn {
+    background-color: #00a79d;
+    border: none;
+    color: #fff;
+    float: right;
+    font-size: 110%;
+    height: 25px;
+    margin-top: 15px;
+}
+
+.quality {
+    display: inline-block;
+}
+
 @media(max-width: 640px){
 
     .card-container {
