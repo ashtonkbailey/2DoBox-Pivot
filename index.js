@@ -5,13 +5,11 @@ $(document).ready(regenerateCards);
 
 $('.save-btn').on('click', saveBtnClick);
 
-// (event.target.className === "delete-button")
-
 $(".bottom-box").on('click', checkTargetOnPage) 
 
 $(document).keypress(updateCardEdits);
 
-$(document).on('click', updateCardEdits)
+$('input').on('keyup', enableSaveBtn)
 
 // ******* Constructor Functions **********
 
@@ -19,19 +17,21 @@ function Card(id, title, body, quality) {
         this.id = id;
         this.title = title;
         this.body = body;
-        this.quality = quality || 'swill'
-    }
+        this.quality = quality || 'swill';
+}
 
 // *****   Functions   *******
 
-// function bob(e) {
-//     if (e.which == 13) {
-//         updateCardEdits()
-//     };
-//     if ($(event.target).closest('body')) {
-//         updateCardEdits()
-//     }
-// }
+function enableSaveBtn() {
+   if ($('#title-input').val() !== "" && $('#body-input').val() !== "") {
+        $('.save-btn').removeAttr('disabled');
+    }; 
+}
+
+function disableSaveBtn() {
+    console.log('disabled');
+    $('.save-btn').attr('disabled', true);
+}
 
 function updateCardEdits(e) {
     if (e.which == 13) {
@@ -46,9 +46,7 @@ function updateCardEdits(e) {
         localStorage.setItem('cardsArray', JSON.stringify(cardsArray));
         $('.card-container').remove();
         regenerateCards();
-
-    };
-    
+    }; 
 }
 
 function getCards() {
@@ -58,23 +56,14 @@ function getCards() {
 
 function saveBtnClick(event) {
     event.preventDefault();
-    // disableSaveBtn();
     var newCard = new Card(Date.now(), $('#title-input').val(), $('#body-input').val());
     var cardsArray = getCards();
     cardsArray.push(newCard);
     localStorage.setItem('cardsArray', JSON.stringify(cardsArray));
     displayCard(newCard);
     $('form')[0].reset();
-};
-
-// function disableSaveBtn() {
-//     console.log('savefunction');
-//    if ($('#title-input').val() !== "" && $('#body-input').val() !== "") {
-//         $('.save-btn').disabled = false;
-//     } else {
-//         $('.save-btn').prop('disabled', true);
-//     }; 
-// }
+    disableSaveBtn();
+}
 
 function displayCard(card) {
     var newDiv = document.createElement('div');
@@ -99,14 +88,12 @@ function regenerateCards() {
 }
 
 function deleteCard() {
-    // if (event.target.className === "delete-button") {
-        var cardHTML = $(event.target).closest('.card-container').remove();
-        var cardsArray = getCards();
-        var foundIndex = cardsArray.findIndex(selectCardIndex);
-        cardsArray.splice(foundIndex, 1);
-        localStorage.setItem('cardsArray', JSON.stringify(cardsArray));
-    }
-// }
+    var cardHTML = $(event.target).closest('.card-container').remove();
+    var cardsArray = getCards();
+    var foundIndex = cardsArray.findIndex(selectCardIndex);
+    cardsArray.splice(foundIndex, 1);
+    localStorage.setItem('cardsArray', JSON.stringify(cardsArray));
+}
 
 function selectCardIndex(element) {
     var cardHTMLId = event.target.parentNode.dataset.id;
@@ -145,6 +132,7 @@ function lowerQuality() {
     var cardsArray = getCards();
     var foundIndex = cardsArray.findIndex(selectCardIndex);
     var currentStoredQuality = cardsArray[foundIndex].quality;
+    setQualityVar();
     var i = qualities.indexOf(currentStoredQuality);
     if (i >= 1) {
         i--;
@@ -154,6 +142,7 @@ function lowerQuality() {
          regenerateCards();
     };
 }
+
 
 
 
