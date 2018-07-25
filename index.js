@@ -10,25 +10,6 @@ $('.save-btn').on('click', saveBtnClick);
 $(".bottom-box").on('click', checkTargetOnPage) 
 
 
-
-// $(".bottom-box").on('click', function(event){
-    // var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
-    // var qualityVariable;
-    // if (event.target.className === "upvote" ) {
-    //     raiseQuality();
-    //     console.log('up');
-    // } else if (event.target.className === "downvote") {
-    //     lowerQuality();
-    //     console.log('down');
-    // };
-    // parsedCard.quality = qualityVariable;
-    // var newCardJSON = JSON.stringify(parsedCard);
-    // localStorage.setItem(cardHTMLId, newCardJSON);
-    // *******changeQuality();
-    // deleteCard();
-    // })
-
-
 // ******* Constructor Functions **********
 
 function Card(id, title, body, quality) {
@@ -87,11 +68,6 @@ function regenerateCards() {
     });
 }
 
-// $.each(localStorage, function() {
-//     var cardData = JSON.parse();
-//     $( ".bottom-box" ).prepend(newCard(cardData.id, cardData.title, cardData.body, cardData.quality));
-// });
-
 function deleteCard() {
     // if (event.target.className === "delete-button") {
         var cardHTML = $(event.target).closest('.card-container').remove();
@@ -119,41 +95,20 @@ function checkTargetOnPage() {
     };
 }
 
- //next we will need to change the inner text of quality to represent new value
-// then we will need to update the storage / change the info in the array
-// we want to stop functionality of going up so we don't go out of the array
-// then do all the same stuff for the down button.
-
 function raiseQuality() {
     var qualities = ['swill', 'plausible', 'genius'];
-    var cardHTML = $(event.target).closest('.card-container');
     var cardsArray = getCards();
     var foundIndex = cardsArray.findIndex(selectCardIndex);
-        console.log(cardsArray[foundIndex]);
-        console.log(cardsArray[foundIndex].quality);
-
     var currentStoredQuality = cardsArray[foundIndex].quality;
-        // console.log(currentStoredQuality);
-    var qualityIndex = qualities.indexOf(currentStoredQuality);
-        // console.log(qualityIndex);
-    if (qualityIndex <= 1) {
-        qualityIndex++;
-        // console.log(qualityIndex);
-        var bob = qualities[qualityIndex];
-        // console.log(bob);
-        cardsArray[foundIndex].quality = bob;
-         // console.log(cardsArray[foundIndex].quality);
-
-        //  ***add part update array-- likely a method****
-        //  push up changes
-
-        // cardsArray.******push*****(newCard);
-        // localStorage.setItem('cardsArray', JSON.stringify(cardsArray));
-        //  regenerateCards();
+    var i = qualities.indexOf(currentStoredQuality);
+    if (i <= 1) {
+        i++;
+        cardsArray[foundIndex].quality = qualities[i];
+        localStorage.setItem('cardsArray', JSON.stringify(cardsArray));
+         $('.card-container').remove();
+         regenerateCards();
     };
 }
-
-
 
 
 
