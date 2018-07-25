@@ -11,7 +11,7 @@ $(document).keypress(updateCardEdits);
 
 $('form').on('keyup', enableSaveBtn)
 
-$('#search-field').on('keydown', filterCards)
+// $(document).on('keyup', filterCards($('.search-field').text()))**********
 
 // ******* Constructor Functions **********
 
@@ -19,17 +19,39 @@ function Card(id, title, body, quality) {
         this.id = id;
         this.title = title;
         this.body = body;
-        this.quality = quality || 'swill';
+        this.quality = quality || 'none';
+        this.completed = false;
 }
 
 // *****   Functions   *******
 
-function filterCards() {
-    var titleOnCard = $('.title-of-card').text();
-    var bodyOnCard = $('.body-of-card').text();
-
+function completed() {
+    $(event.target).closest('.card-container').toggleClass('completed-card');
+    var cardsArray = getCards();
+    var foundIndex = cardsArray.findIndex(selectCardIndex);
+    var completedOnCard = cardsArray[foundIndex].completed;
+    cardsArray[foundIndex].completed = true;
+    localStorage.setItem('cardsArray', JSON.stringify(cardsArray));
 
 }
+
+//************************************************************
+// function filterCards(string) {
+//     console.log('hello');
+//     var titleOnCard = $('.title-of-card').text();
+//     var bodyOnCard = $('.body-of-card').text();
+//     cardsArray = getCards();
+//     var filteredArray = cardsArray.filter(function(card) {
+//         var body = card.body.toLowerCase();
+//         var title = card.title.toLowerCase();
+//         if (body.includes(string) || title.includes(string)) {
+//             return card;
+//         };
+//     });
+//     filteredArray.forEach(function(element) {
+//          displayCard(element);
+//     });
+// }********************************************************
 
 function enableSaveBtn() {
    if ($('#title-input').val() !== "" && $('#body-input').val() !== "") {
@@ -38,7 +60,6 @@ function enableSaveBtn() {
 }
 
 function disableSaveBtn() {
-    console.log('disabled');
     $('.save-btn').attr('disabled', true);
 }
 
@@ -82,7 +103,7 @@ function displayCard(card) {
                             <p class="body-of-card" contenteditable="true">${card.body}</p>
                             <button class="upvote"></button>
                             <button class="downvote"></button>
-                            <p class="quality">Quality: 
+                            <p class="quality">Level of Importance: 
                             <span class="qualityVariable">${card.quality}</span></p>
                             <button class="completed-btn">completed<button>
                             <hr>
@@ -93,9 +114,11 @@ function displayCard(card) {
 function regenerateCards() {
     var cardsArray = getCards();
     cardsArray.forEach(function(element) {
-    displayCard(element);
+         displayCard(element);
     });
-}
+};
+
+
 
 function deleteCard() {
     var cardHTML = $(event.target).closest('.card-container').remove();
@@ -120,15 +143,18 @@ function checkTargetOnPage() {
     if (event.target.className === "downvote") {
         lowerQuality();
     };
+    if (event.target.className === "completed-btn") {
+        completed();
+    }
 }
 
 function raiseQuality() {
-    var qualities = ['swill', 'plausible', 'genius'];
+    var qualities = ['none', 'low', 'normal', 'high', 'critical'];
     var cardsArray = getCards();
     var foundIndex = cardsArray.findIndex(selectCardIndex);
     var currentStoredQuality = cardsArray[foundIndex].quality;
     var i = qualities.indexOf(currentStoredQuality);
-    if (i <= 1) {
+    if (i <= 4) {
         i++;
         cardsArray[foundIndex].quality = qualities[i];
         localStorage.setItem('cardsArray', JSON.stringify(cardsArray));
@@ -138,11 +164,10 @@ function raiseQuality() {
 }
 
 function lowerQuality() {
-    var qualities = ['swill', 'plausible', 'genius'];
+    var qualities = ['none', 'low', 'normal', 'high', 'critical'];
     var cardsArray = getCards();
     var foundIndex = cardsArray.findIndex(selectCardIndex);
     var currentStoredQuality = cardsArray[foundIndex].quality;
-    setQualityVar();
     var i = qualities.indexOf(currentStoredQuality);
     if (i >= 1) {
         i--;

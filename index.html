@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>ideaBox</title>
+        <title>2DoBox</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="style.css">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab:700" rel="stylesheet">
@@ -10,13 +10,14 @@
         <section class="container">
             <article class="form-container">
                 <form>
-                    <h1>idea<span class="alt-title-color">Box</span></h1>
+                    <h1>2Do<span class="alt-title-color">Box</span></h1>
                     <input aria-label="Please enter title" id="title-input" type="text" placeholder="Title">
-                    <input aria-label="Please enter body content" id="body-input" type="text" placeholder="Body">
+                    <input aria-label="Please enter task content" id="body-input" type="text" placeholder="Task">
                     <button class="save-btn" disabled>save</button>
                 </form>
             </article>
-            <input aria-label="Please enter search criteria" id="search-field" type="text" placeholder="Search">
+            <input aria-label="Please enter filter criteria" class="search-field" type="text" placeholder="Filter">
+            <button class="show-completed-btn">show completed 2do's</button>
             <article class="bottom-box"></article>
         </section>
         <script src="./jquery/jquery-3.2.1.js"></script>

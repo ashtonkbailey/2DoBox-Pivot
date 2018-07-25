@@ -62,6 +62,22 @@ h1{
 
 /*Bottom Box Styles (change name)*/
 
+.show-completed-btn {
+    background-color: #00a79d;
+    border: none;
+    color: #fff;
+    font-size: 120%;
+    height: 30px;
+    margin: auto;
+    width: 45.5%;
+
+
+}
+
+.show-completed-btn:hover {
+    background-color: #045e55;
+}
+
 button {
     background-color: transparent;
     border: none;
@@ -75,6 +91,13 @@ h2 {
 }
 
 .card-container {
+    margin: auto;
+    position: relative;
+    width: 45%;
+}
+
+.completed-card {
+    background-color: #DDDDE0;
     margin: auto;
     position: relative;
     width: 45%;
