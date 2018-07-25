@@ -9,6 +9,9 @@ $('.save-btn').on('click', saveBtnClick);
 
 $(".bottom-box").on('click', checkTargetOnPage) 
 
+$(document).keypress(updateCardEdits);
+
+$(document).on('click', updateCardEdits)
 
 // ******* Constructor Functions **********
 
@@ -20,6 +23,33 @@ function Card(id, title, body, quality) {
     }
 
 // *****   Functions   *******
+
+// function bob(e) {
+//     if (e.which == 13) {
+//         updateCardEdits()
+//     };
+//     if ($(event.target).closest('body')) {
+//         updateCardEdits()
+//     }
+// }
+
+function updateCardEdits(e) {
+    if (e.which == 13) {
+        var cardsArray = getCards();
+        var foundIndex = cardsArray.findIndex(selectCardIndex);
+        var currentStoredTitle = cardsArray[foundIndex].title;
+        var titleOnCard = $('.title-of-card').text();
+        cardsArray[foundIndex].title = titleOnCard;
+        var currentStoredBody = cardsArray[foundIndex].body;
+        var bodyOnCard = $('.body-of-card').text();
+        cardsArray[foundIndex].body = bodyOnCard;
+        localStorage.setItem('cardsArray', JSON.stringify(cardsArray));
+        $('.card-container').remove();
+        regenerateCards();
+
+    };
+    
+}
 
 function getCards() {
     var cardsArray = JSON.parse(localStorage.getItem('cardsArray')) || [];
@@ -49,9 +79,9 @@ function saveBtnClick(event) {
 function displayCard(card) {
     var newDiv = document.createElement('div');
     newDiv.innerHTML = `<div data-id="${card.id}" class="card-container">
-                            <h2 class="title-of-card">${card.title}</h2>
+                            <h2 class="title-of-card" contenteditable="true">${card.title}</h2>
                             <button class="delete-button"></button>
-                            <p class="body-of-card">${card.body}</p>
+                            <p class="body-of-card" contenteditable="true">${card.body}</p>
                             <button class="upvote"></button>
                             <button class="downvote"></button>
                             <p class="quality">Quality: 
