@@ -133,16 +133,23 @@ function raiseQuality() {
         console.log(cardsArray[foundIndex].quality);
 
     var currentStoredQuality = cardsArray[foundIndex].quality;
-        console.log(currentStoredQuality);
+        // console.log(currentStoredQuality);
     var qualityIndex = qualities.indexOf(currentStoredQuality);
-        console.log(qualityIndex);
+        // console.log(qualityIndex);
     if (qualityIndex <= 1) {
-    qualityIndex++;
-        console.log(qualityIndex);
-    var bob = qualities[qualityIndex];
-        console.log(bob);
-    cardsArray[foundIndex].quality = bob;
-         console.log(cardsArray[foundIndex].quality);
+        qualityIndex++;
+        // console.log(qualityIndex);
+        var bob = qualities[qualityIndex];
+        // console.log(bob);
+        cardsArray[foundIndex].quality = bob;
+         // console.log(cardsArray[foundIndex].quality);
+
+        //  ***add part update array-- likely a method****
+        //  push up changes
+
+        // cardsArray.******push*****(newCard);
+        // localStorage.setItem('cardsArray', JSON.stringify(cardsArray));
+        //  regenerateCards();
     };
 }
 
