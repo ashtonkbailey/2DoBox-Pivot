@@ -5,7 +5,13 @@ $(document).ready(regenerateCards);
 
 $('.save-btn').on('click', saveBtnClick);
 
-$(".bottom-box").on('click', function(event){
+// (event.target.className === "delete-button")
+
+$(".bottom-box").on('click', checkTargetOnPage) 
+
+
+
+// $(".bottom-box").on('click', function(event){
     // var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
     // var qualityVariable;
     // if (event.target.className === "upvote" ) {
@@ -18,9 +24,9 @@ $(".bottom-box").on('click', function(event){
     // parsedCard.quality = qualityVariable;
     // var newCardJSON = JSON.stringify(parsedCard);
     // localStorage.setItem(cardHTMLId, newCardJSON);
-    changeQuality();
-    deleteCard();
-    })
+    // *******changeQuality();
+    // deleteCard();
+    // })
 
 
 // ******* Constructor Functions **********
@@ -87,49 +93,58 @@ function regenerateCards() {
 // });
 
 function deleteCard() {
-    if (event.target.className === "delete-button") {
+    // if (event.target.className === "delete-button") {
         var cardHTML = $(event.target).closest('.card-container').remove();
         var cardsArray = getCards();
         var foundIndex = cardsArray.findIndex(selectCardIndex);
         cardsArray.splice(foundIndex, 1);
         localStorage.setItem('cardsArray', JSON.stringify(cardsArray));
     }
-}
+// }
 
 function selectCardIndex(element) {
     var cardHTMLId = event.target.parentNode.dataset.id;
     return element.id == cardHTMLId;
 } 
 
-// qualityArray = 
-// up vote will move one index up in the array and return the value of that index.
-// down vote will move one index down in the array and reassign the value of that index & display on card.
-// we created a variable for our array, then 
-// targeted the quality as it is currently on the page
-// then we identified part of page where up and down votes live
-// then we created a variable that targets the index number of the current quality in the array
-// then we assigned the qualityIndex to increment up by one if the upvote was pushed
-// 
+function checkTargetOnPage() {
+    if (event.target.className === "delete-button") {
+        deleteCard();
+    };
+    if (event.target.className === "upvote") {
+        raiseQuality();
+    };
+    if (event.target.className === "downvote") {
+        lowerQuality();
+    };
+}
+
  //next we will need to change the inner text of quality to represent new value
 // then we will need to update the storage / change the info in the array
 // we want to stop functionality of going up so we don't go out of the array
 // then do all the same stuff for the down button.
 
-
-function changeQuality() {
+function raiseQuality() {
     var qualities = ['swill', 'plausible', 'genius'];
-    var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
-    var qualityIndex = qualities.indexOf(currentQuality)
-    console.log(qualities.indexOf(currentQuality));
-    if (event.target.className === "upvote") {
-        qualityIndex++;
-        console.log(qualityIndex);
-    console.log('upvote')
-    } else if (event.target.className === "downvote") {
-    console.log('downvote');
-    };
+    var cardHTML = $(event.target).closest('.card-container');
+    var cardsArray = getCards();
+    var foundIndex = cardsArray.findIndex(selectCardIndex);
+        console.log(cardsArray[foundIndex]);
+        console.log(cardsArray[foundIndex].quality);
 
-}  
+    var currentStoredQuality = cardsArray[foundIndex].quality;
+        console.log(currentStoredQuality);
+    var qualityIndex = qualities.indexOf(currentStoredQuality);
+        console.log(qualityIndex);
+    if (qualityIndex <= 1) {
+    qualityIndex++;
+        console.log(qualityIndex);
+    var bob = qualities[qualityIndex];
+        console.log(bob);
+    cardsArray[foundIndex].quality = bob;
+         console.log(cardsArray[foundIndex].quality);
+    };
+}
 
 
 
